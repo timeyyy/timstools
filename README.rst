@@ -1,4 +1,4 @@
-tkquick
-=======
+timstools
+=========
 
-'Collection of methods for helping you programm faster'
+'Collection of useful functions '

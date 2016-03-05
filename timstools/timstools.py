@@ -9,6 +9,7 @@ import os
 import urllib.request
 import urllib.error
 import io
+import functools
 
 try:
     import pysftp
@@ -403,3 +404,17 @@ def silence():
 def get_drf(__file__, file):
     '''returns the directory relative to the current file'''
     return os.path.join(os.path.dirname(__file__), file)
+
+
+def preserve_cwd(function):
+    '''Decorator used for keeping the original cwd after function call'''
+
+    @functools.wraps(function)
+    def decorator(*args, **kwargs):
+        cwd = os.getcwd()
+        try:
+            return function(*args, **kwargs)
+        finally:
+            os.chdir(cwd)
+
+    return decorator

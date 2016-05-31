@@ -9,7 +9,6 @@ import os
 import urllib.request
 import urllib.error
 import io
-import functools
 
 try:
     import pysftp
@@ -354,13 +353,12 @@ def unique_int(values):
     if repeatedly called will return 1,2,4,5,7,8
     '''
     last = 0
-    for num in values:  #generate a unique number
-        if last not in values:  #num is  uniquie (will return numbers if the list has skips so p1 p2 p5,
-            #~ print('checking if last not in
+    for num in values:
+        if last not in values:
             break
-        else:               #number already exists
+        else:
             last += 1
-    return last             #looped till end, then it was plussed so just return new value
+    return last
 
 def next_highest_num(values):
     '''
@@ -409,7 +407,7 @@ def get_drf(__file__, file):
 def preserve_cwd(function):
     '''Decorator used for keeping the original cwd after function call'''
 
-    @functools.wraps(function)
+    @wraps(function)
     def decorator(*args, **kwargs):
         cwd = os.getcwd()
         try:
@@ -418,3 +416,21 @@ def preserve_cwd(function):
             os.chdir(cwd)
 
     return decorator
+
+class Singleton(type):
+    '''
+    A Singleton, to be used as a metaclass
+
+    #Python2
+    class MyClass(BaseClass):
+        __metaclass__ = Singleton
+
+    #Python3
+    class MyClass(BaseClass, metaclass=Singleton):
+        pass
+    '''
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]

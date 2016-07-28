@@ -4,7 +4,7 @@ Short Collection of Classes/Functions used across differnt projects
 '''
 from collections import OrderedDict
 import contextlib
-import json 
+import json
 import os
 import urllib.request
 import urllib.error
@@ -372,11 +372,13 @@ def next_highest_num(values):
         return last_num + 1
 
 def internet_on():
+    # TODO this seems to break if i disconnect vpn and reconnect..
     try:
         urllib.request.urlopen('http://74.125.228.100',timeout=1)
         return True
-    except urllib.error.URLError: pass
-    return False                
+    except urllib.error.URLError:
+        pass
+    return False
 
 def parent_path(path, level=1):
     '''Returnts a parent of a path, or parent parent etc depending on level specifed'''

@@ -489,3 +489,8 @@ def debug_decorator(func):
             return_value = func(*args, **kwargs)
         return return_value
     return decorated_func
+
+def safe_string(filename):
+    '''make a string safe for filenames'''
+    return "".join([c for c in filename if c.isalpha()
+                        or c.isdigit() or c==' ']).rstrip()

@@ -43,7 +43,6 @@ def rate_limited(max_per_second, mode='wait', delay_first_call=False):
                 if not last_time_called[0] or elapsed > min_interval:
                     return run_func()
                 elif mode == 'refresh_timer':
-                    print('Ref timer')
                     lock.release()
                     last_time_called[0] += time.perf_counter()
                     return

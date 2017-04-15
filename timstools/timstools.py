@@ -6,6 +6,7 @@ from collections import OrderedDict
 import contextlib
 import json
 import os
+from os.path import dirname, join, abspath
 import urllib.request
 import urllib.error
 import io
@@ -494,3 +495,14 @@ def safe_string(filename):
     '''make a string safe for filenames'''
     return "".join([c for c in filename if c.isalpha()
                         or c.isdigit() or c==' ']).rstrip()
+
+def make_class_name(string):
+    '''given foo_bar returns FooBar'''
+    parts = string.split('_')
+    return ''.join(x.capitalize() for x in parts)
+
+def sjoin(dunder_file, *to_add):
+    '''given a python file __file__, joins the location of this file to stuff..'''
+    return abspath(join(dirname(dunder_file), *to_add))
+
+
